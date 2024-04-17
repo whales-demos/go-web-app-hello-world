@@ -1,0 +1,19 @@
+services:
+
+  web-app:
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+    environment:
+      - MESSAGE="🎉 Hello from 🐳 Compose 👋"
+      - HTTP_PORT=7070
+    ports:
+      - 7070:7070
+    develop:
+      watch:
+        - action: sync
+          path: ./webapp/public
+          target: /app/public
+        - action: rebuild
+          path: ./webapp/main.go
+
