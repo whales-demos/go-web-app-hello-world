@@ -15,7 +15,7 @@ class App extends Component {
             </p>
           </header>
           <p>
-            <${Title} subtitle="${Date.now()}"/>
+            <${Title} subtitle="🚧 this is a wip"/>
           </p>
         </article>
       </dialog>

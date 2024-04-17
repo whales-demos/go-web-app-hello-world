@@ -1,6 +1,7 @@
 services:
 
   web-app:
+    container_name: webapp-demo
     build:
       context: ./webapp
       dockerfile: Dockerfile

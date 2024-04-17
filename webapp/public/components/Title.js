@@ -28,12 +28,15 @@ class Title extends Component {
 
     console.log("🚧", variables)
 
-    this.state = { text: variables.message ? variables.message : "this is a message" }
+    this.state = { 
+      text: variables.message ? variables.message : "this is a message",
+      mainTitle: `🎃 You've been hacked! 😈 ${Date.now()}`
+    }
   }
 
   render() {
     return html`
-    <h1>🎃 You've been hacked! 😈</h1>
+    <h1>${this.state.mainTitle}</h1>
     <h2>${this.state.text}</h2>
     <h3>${this.props.subtitle}</h3>
     `
