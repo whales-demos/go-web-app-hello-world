@@ -30,7 +30,10 @@ class Title extends Component {
 
     this.state = { 
       text: variables.message ? variables.message : "this is a message",
-      mainTitle: `🎃 You've been hacked! 😈 ${Date.now()}`
+      mainTitle: `📅 ${(new Date()).toLocaleString()}`,
+      //mainTitle: `🎃 You've been hacked! 😈 ${(new Date()).toLocaleString()}`,
+      authenticationStatus: variables.authenticationStatus
+
     }
   }
 
@@ -38,7 +41,8 @@ class Title extends Component {
     return html`
     <h1>${this.state.mainTitle}</h1>
     <h2>${this.state.text}</h2>
-    <h3>${this.props.subtitle}</h3>
+    <h3>${this.state.authenticationStatus}</h3>
+    <h4>${this.props.subtitle}</h4>
     `
   }
 }

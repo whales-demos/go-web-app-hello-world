@@ -20,15 +20,39 @@ func GetBytesBody(request *http.Request) []byte {
 }
 */
 
-
 func main() {
 
 	var httpPort = os.Getenv("HTTP_PORT")
-	if httpPort == "" { httpPort = "8080" }
+	if httpPort == "" {
+		httpPort = "8080"
+	}
 
 	var message = os.Getenv("MESSAGE")
-	if message == "" { message = "this is a message" }
-	
+	if message == "" {
+		message = "this is a message"
+	}
+
+	var authenticationStatus = ""
+	var dbPasswordFile = os.Getenv("DB_PASSWORD_FILE")
+
+	if dbPasswordFile == "" {
+		authenticationStatus = "😡 you are not authenticated"
+	} else {
+		// read content of file, the path of the file is in dbPasswordFile
+		// if the content is "password" then set authenticationStatus to "you are authenticated"
+		// else set authenticationStatus to "you are not authenticated"
+		content, err := os.ReadFile(dbPasswordFile)
+		if err != nil {
+			authenticationStatus = "😡 you are not authenticated: " + err.Error()
+		}
+
+		if string(content) == "password" {
+			authenticationStatus = "🙂 you are authenticated"
+		} else {
+			authenticationStatus = "😡 you are not authenticated"
+		}
+	}
+
 	mux := http.NewServeMux()
 
 	fileServerHtml := http.FileServer(http.Dir("public"))
@@ -37,7 +61,8 @@ func main() {
 	mux.HandleFunc("/variables", func(response http.ResponseWriter, request *http.Request) {
 
 		variables := map[string]interface{}{
-			"message": message,
+			"message":              message,
+			"authenticationStatus": authenticationStatus,
 		}
 
 		jsonString, err := json.Marshal(variables)

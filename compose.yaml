@@ -6,10 +6,10 @@ services:
       context: ./webapp
       dockerfile: Dockerfile
     environment:
-      - MESSAGE="🎉 Hello from 🐳 Compose 👋"
-      - HTTP_PORT=7070
+      - MESSAGE=🎉 Hello from 🐳 Compose 👋
+      - HTTP_PORT=6065
     ports:
-      - 7070:7070
+      - 6065:6065
     develop:
       watch:
         - action: sync
