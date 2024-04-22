@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+data:
+  db-password.txt: |
+    password
+
+# 🫢 I know this is not a good practice to store passwords in plain text, but this is just a demo.

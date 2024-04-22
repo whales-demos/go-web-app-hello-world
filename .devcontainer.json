@@ -1,5 +1,5 @@
 {
-    "image":"k33g/genai-go-workspace:0.0.3",
+    "image":"philippecharriere494/kube-demo-workspace:0.0.0",
     "mounts": [
         "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
     ],
@@ -8,12 +8,12 @@
             "extensions": [
                 "golang.go",
                 "pomdtr.excalidraw-editor",
-                "Codeium.codeium",
                 "Tobermory.es6-string-html"
             ]
         }
     },
     "remoteEnv": {
-        "MESSAGE": "Hello World"
+        "MESSAGE": "Hello World",
+        "KUBECONFIG": "/workspaces/go-web-app-hello-world/.k8s/civo-red-panda-kubeconfig.yaml"
     }
 }

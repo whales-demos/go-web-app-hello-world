@@ -1,0 +1,66 @@
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-webapp-demo
+spec:
+  selector:
+    app: go-webapp-demo
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-webapp-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-webapp-demo
+  template:
+    metadata:
+      labels:
+        app: go-webapp-demo
+    spec:
+      containers:
+        - name: go-webapp-demo
+          image: philippecharriere494/go-webapp-demo:0.0.3
+          env:
+          - name: MESSAGE
+            value: "👋 Hello World 🌍 from ☸️ K8S"
+          #- name: DB_PASSWORD_FILE
+          #  value: "/data/db-password.txt"
+          ports:
+            - containerPort: 8080
+          #imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+          #volumeMounts:
+          #  - name: config-volume
+          #    mountPath: /data
+      #volumes:
+      #  - name: config-volume
+      #    configMap:
+      #      name: demo-config
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: go-webapp-demo
+  labels:
+spec:
+  rules:
+    - host: go-webapp-demo.0b5edf77-60a3-4a53-9010-39e0b7af5186.k8s.civo.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service: 
+              name: go-webapp-demo
+              port: 
+                number: 80

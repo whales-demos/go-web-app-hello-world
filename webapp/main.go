@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
 /*
@@ -32,11 +33,20 @@ func main() {
 		message = "this is a message"
 	}
 
+	log.Println("🚀 starting web server on port: " + httpPort)
+	log.Println("📝 message: " + message)
+
 	var authenticationStatus = ""
-	var dbPasswordFile = os.Getenv("DB_PASSWORD_FILE")
+	var dbPasswordFile = os.Getenv("DB_PASSWORD_FILE") // 🤭 I know it is not a good practice to store passwords in files
+
+	log.Println("dbPasswordFile", dbPasswordFile)
 
 	if dbPasswordFile == "" {
+
 		authenticationStatus = "😡 you are not authenticated"
+
+		log.Println("dbPasswordFile empty", authenticationStatus)
+
 	} else {
 		// read content of file, the path of the file is in dbPasswordFile
 		// if the content is "password" then set authenticationStatus to "you are authenticated"
@@ -44,12 +54,20 @@ func main() {
 		content, err := os.ReadFile(dbPasswordFile)
 		if err != nil {
 			authenticationStatus = "😡 you are not authenticated: " + err.Error()
+
+			log.Println("dbPasswordFile error", authenticationStatus)
+
 		}
 
-		if string(content) == "password" {
+		log.Println("📝 dbPasswordFile content", content, string(content))
+
+		if strings.Replace(string(content), "\n", "", -1) == "password" {
 			authenticationStatus = "🙂 you are authenticated"
 		} else {
 			authenticationStatus = "😡 you are not authenticated"
+
+			log.Println("false content", authenticationStatus)
+
 		}
 	}
 
